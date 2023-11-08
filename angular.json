@@ -1,143 +1,143 @@
 {
-  "$schema": "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
-  "version": 1,
-  "newProjectRoot": "projects",
-  "projects": {
-    "angular.io-example": {
+  "project-schema": "./node_modules/@ng-dev/core/src/workspace/project-schema.json",
+  "version": 2,
+  "root-directory": "projects",
+  "project-configurations": {
+    "my-angular-app": {
       "root": "",
-      "projectType": "application",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/angular.io-example",
-            "index": "src/index.html",
-            "main": "src/main.ts",
+      "type": "app",
+      "app-prefix": "myapp",
+      "build-process": {
+        "build-step": {
+          "executor": "@ng-dev/build-angular:web",
+          "config-options": {
+            "output-path": "dist/my-angular-app",
+            "index-file": "src/index.html",
+            "entry-file": "src/main.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
-            "assets": [
+            "ts-configuration": "src/tsconfig.app.json",
+            "static-assets": [
               {
-                "glob": "favicon.ico",
-                "input": "src",
-                "output": "/"
+                "glob-pattern": "favicon.ico",
+                "source-directory": "src",
+                "output-directory": "/"
               },
               {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets"
+                "glob-pattern": "**/*",
+                "source-directory": "src/assets",
+                "output-directory": "/assets"
               }
             ],
-            "styles": [
+            "stylesheets": [
               {
-                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+                "source-file": "node_modules/@ng/material/prebuilt-themes/indigo-pink.css"
               },
               {
-                "input": "src/styles.css"
+                "source-file": "src/styles.css"
               },
               {
-                "input": "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+                "source-file": "./node_modules/bootstrap/dist/css/bootstrap.min.css"
               }
             ],
-            "scripts": []
+            "custom-scripts": []
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
+              "file-replacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "source-file": "src/environments/environment.ts",
+                  "target-file": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "optimize-build": true,
+              "hash-output-files": "all",
+              "generate-source-maps": false,
+              "extract-css": true,
+              "generate-named-chunks": false,
+              "compile-aot": true,
+              "extract-licenses": true,
+              "generate-vendor-chunks": false,
+              "optimize-build-process": true
             }
           }
         },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "angular.io-example:build"
+        "serve-step": {
+          "executor": "@ng-dev/build-angular:web-server",
+          "config-options": {
+            "browser-target": "my-angular-app:build-step"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular.io-example:build:production"
+              "browser-target": "my-angular-app:build-step:production"
             }
           }
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "angular.io-example:build"
+        "i18n-extraction-step": {
+          "executor": "@ng-dev/build-angular:extract-i18n",
+          "config-options": {
+            "browser-target": "my-angular-app:build-step"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
-            "styles": [
+        "test-step": {
+          "executor": "@ng-dev/build-angular:karma",
+          "config-options": {
+            "main-file": "src/test.ts",
+            "polyfills-file": "src/polyfills.ts",
+            "ts-configuration": "src/tsconfig.spec.json",
+            "karma-config": "src/karma.conf.js",
+            "stylesheets": [
               {
-                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+                "source-file": "node_modules/@ng/material/prebuilt-themes/indigo-pink.css"
               },
               {
-                "input": "styles.css"
+                "source-file": "styles.css"
               }
             ],
-            "scripts": [],
-            "assets": [
+            "custom-scripts": [],
+            "static-assets": [
               {
-                "glob": "favicon.ico",
-                "input": "src/",
-                "output": "/"
+                "glob-pattern": "favicon.ico",
+                "source-directory": "src/",
+                "output-directory": "/"
               },
               {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets"
+                "glob-pattern": "**/*",
+                "source-directory": "src/assets",
+                "output-directory": "/assets"
               }
             ]
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
+        "lint-step": {
+          "executor": "@ng-dev/build-angular:ts-lint",
+          "config-options": {
+            "ts-configuration": [
               "src/tsconfig.app.json",
               "src/tsconfig.spec.json"
             ],
-            "exclude": [
+            "exclude-patterns": [
               "**/node_modules/**"
             ]
           }
         }
       }
     },
-    "angular.io-example-e2e": {
+    "e2e-tests": {
       "root": "e2e/",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular.io-example:serve"
+      "type": "app",
+      "e2e-architect": {
+        "e2e-testing": {
+          "executor": "@ng-dev/build-angular:protractor",
+          "config-options": {
+            "protractor-configuration": "e2e/protractor.conf.js",
+            "development-server-target": "my-angular-app:serve-step"
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
+        "lint-step": {
+          "executor": "@ng-dev/build-angular:ts-lint",
+          "config-options": {
+            "ts-configuration": "e2e/tsconfig.e2e.json",
+            "exclude-patterns": [
               "**/node_modules/**"
             ]
           }
